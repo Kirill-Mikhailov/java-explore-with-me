@@ -5,7 +5,7 @@ import ru.practicum.ewm.participationrequest.model.ParticipationRequest;
 
 public class ParticipationRequestMapper {
 
-    public static ParticipationRequestDto toParticipationRequestDto (ParticipationRequest participationRequest) {
+    public static ParticipationRequestDto toParticipationRequestDto(ParticipationRequest participationRequest) {
         return ParticipationRequestDto.builder()
                 .id(participationRequest.getId())
                 .created(participationRequest.getCreated())

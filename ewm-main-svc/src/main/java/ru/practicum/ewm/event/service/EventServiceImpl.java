@@ -178,7 +178,7 @@ public class EventServiceImpl implements EventService {
         }
         List<ParticipationRequest> confirmedRequests = new ArrayList<>();
         List<ParticipationRequest> rejectedRequests = new ArrayList<>();
-        for(ParticipationRequest request : requests) {
+        for (ParticipationRequest request : requests) {
             if (eventRequestStatusUpdateRequest.getStatus().equals(ParticipationRequestStatus.CONFIRMED) && available > 0) {
                 request.setStatus(ParticipationRequestStatus.CONFIRMED);
                 confirmedRequests.add(request);

@@ -12,7 +12,6 @@ import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.util.Util;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
