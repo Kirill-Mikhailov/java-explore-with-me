@@ -1,7 +1,7 @@
 package ru.practicum.statistics.model;
 
 
-import ru.practicum.dto.HitDto;
+import ru.practicum.ewm.dto.HitDto;
 
 public class HitMapper {
 
