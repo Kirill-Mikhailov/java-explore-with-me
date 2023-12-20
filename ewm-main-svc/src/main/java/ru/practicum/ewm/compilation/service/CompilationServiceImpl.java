@@ -29,7 +29,7 @@ public class CompilationServiceImpl implements CompilationService {
     private final EventService eventService;
 
     @Override
-    public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
+    public List<CompilationDto> getCompilations(Boolean pinned, int from, int size) {
         int page = from / size;
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         return compilationRepository.getCompilations(pinned, pageable).stream()

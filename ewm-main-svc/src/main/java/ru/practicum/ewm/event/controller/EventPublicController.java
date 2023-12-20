@@ -37,8 +37,8 @@ public class EventPublicController {
                 @DateTimeFormat(pattern = Util.DATE_TIME_FORMATTER) LocalDateTime rangeEnd,
             @RequestParam(name = "onlyAvailable", required = false, defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(name = "sort", required = false) @Pattern(regexp = "EVENT_DATE|VIEWS") String sort,
-            @RequestParam(value = "from", required = false, defaultValue = "0") @PositiveOrZero Integer from,
-            @RequestParam(value = "size", required = false, defaultValue = "10") @Positive Integer size,
+            @RequestParam(value = "from", required = false, defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(value = "size", required = false, defaultValue = "10") @Positive int size,
             HttpServletRequest request) {
         log.info("EventPublicController => getEvents: text={}, categories={}, paid={}, rangeStart={}, rangeEnd={}, " +
                 "onlyAvailable={}, sort={}, from={}, size={}", text, categories, paid, rangeStart, rangeEnd,

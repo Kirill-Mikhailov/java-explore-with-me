@@ -47,7 +47,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventShortDto> getEvents(
             String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,
-            Boolean onlyAvailable, String sort, Integer from, Integer size, HttpServletRequest request) {
+            Boolean onlyAvailable, String sort, int from, int size, HttpServletRequest request) {
         if (Objects.isNull(rangeStart)) {
             rangeStart = LocalDateTime.now();
         }
@@ -87,7 +87,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventShortDto> getUserEvents(Long userId, Integer from, Integer size) {
+    public List<EventShortDto> getUserEvents(Long userId, int from, int size) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User with id=" + userId + " was not found");
         }
@@ -201,7 +201,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventFullDto> getEventsForAdmin(List<Long> users, List<EventState> states,
                                                 List<Long> categories, LocalDateTime rangeStart,
-                                                LocalDateTime rangeEnd, Integer from, Integer size) {
+                                                LocalDateTime rangeEnd, int from, int size) {
         return eventRepository.getEventsForAdmin(users, states, categories, rangeStart, rangeEnd,
                         getPageable(from, size, Sort.by("id").ascending()))
                 .stream().map(event -> EventMapper.toEventFullDto(event, getConfirmedRequests(event), getViews(event)))
@@ -239,7 +239,7 @@ public class EventServiceImpl implements EventService {
                 getViews(event))).collect(Collectors.toSet());
     }
 
-    private Pageable getPageable(Integer from, Integer size, Sort sort) {
+    private Pageable getPageable(int from, int size, Sort sort) {
         int page = from / size;
         return Objects.isNull(sort) ?
                 PageRequest.of(page, size) : PageRequest.of(page, size, sort);

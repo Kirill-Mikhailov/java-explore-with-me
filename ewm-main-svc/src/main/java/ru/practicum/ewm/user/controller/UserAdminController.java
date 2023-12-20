@@ -26,8 +26,8 @@ public class UserAdminController {
     @GetMapping
     public List<UserDto> getUsers(
             @RequestParam(value = "ids", required = false) List<Long> ids,
-            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") int from,
+            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         log.info("UserAdminController => getUsers: ids={}, from={}, size ={}", ids, from, size);
         return userService.getUsers(ids, from, size);
     }

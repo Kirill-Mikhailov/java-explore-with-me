@@ -35,8 +35,8 @@ public class EventAdminController {
             @RequestParam(name = "rangeStart", required = false) LocalDateTime rangeStart,
             @DateTimeFormat(pattern = Util.DATE_TIME_FORMATTER)
             @RequestParam(name = "rangeEnd", required = false) LocalDateTime rangeEnd,
-            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") int from,
+            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         log.info("EventAdminController => getEvents: users={}, states={}, categories={}, rangeStart={}, rangeEnd={}, " +
                 "from={}, size={}", users, states, categories, rangeStart, rangeEnd, from, size);
         return eventService.getEventsForAdmin(users, states, categories, rangeStart, rangeEnd, from, size);

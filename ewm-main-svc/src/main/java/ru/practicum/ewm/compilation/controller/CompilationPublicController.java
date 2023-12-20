@@ -23,8 +23,8 @@ public class CompilationPublicController {
     @GetMapping
     public List<CompilationDto> getCompilations(
             @RequestParam(name = "pinned", required = false) Boolean pinned,
-            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") int from,
+            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         log.info("CompilationPublicController => getCompilations: pinned={}, from={}, size={}", pinned, from, size);
         return compilationService.getCompilations(pinned, from, size);
     }

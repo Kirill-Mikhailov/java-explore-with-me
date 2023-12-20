@@ -16,13 +16,13 @@ public interface EventService {
 
     List<EventShortDto> getEvents(
             String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,
-            Boolean onlyAvailable, String sort, Integer from, Integer size, HttpServletRequest request);
+            Boolean onlyAvailable, String sort, int from, int size, HttpServletRequest request);
 
     EventFullDto getEventById(Long id, HttpServletRequest request);
 
     EventFullDto saveEvent(NewEventDto newEventDto, Long userId);
 
-    List<EventShortDto> getUserEvents(Long userId, Integer from, Integer size);
+    List<EventShortDto> getUserEvents(Long userId, int from, int size);
 
     EventFullDto getUserEventById(Long userId, Long eventId);
 
@@ -35,7 +35,7 @@ public interface EventService {
 
     List<EventFullDto> getEventsForAdmin(List<Long> users, List<EventState> states,
                                          List<Long> categories, LocalDateTime rangeStart,
-                                         LocalDateTime rangeEnd, Integer from, Integer size);
+                                         LocalDateTime rangeEnd, int from, int size);
 
     EventFullDto updateEventByAdmin(Long eventId, UpdateEventAdminRequest updateEventAdminRequest);
 
