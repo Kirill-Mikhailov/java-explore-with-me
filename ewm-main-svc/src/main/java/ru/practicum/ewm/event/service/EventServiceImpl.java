@@ -156,7 +156,7 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public EventRequestStatusUpdateResult updateEventRequestsStatus(
-            Long userId, Long eventId, EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) { //TODO
+            Long userId, Long eventId, EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User with id=" + userId + " was not found");
         }
