@@ -156,7 +156,7 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public EventRequestStatusUpdateResult updateEventRequestsStatus(
-            Long userId, Long eventId, EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
+            Long userId, Long eventId, EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) { //TODO
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User with id=" + userId + " was not found");
         }
@@ -187,6 +187,8 @@ public class EventServiceImpl implements EventService {
                 request.setStatus(ParticipationRequestStatus.REJECTED);
                 rejectedRequests.add(request);
             }
+            requestRepository.saveAll(confirmedRequests);
+            requestRepository.saveAll(rejectedRequests);
         }
         return EventRequestStatusUpdateResult.builder()
                 .confirmedRequests(confirmedRequests.stream()
