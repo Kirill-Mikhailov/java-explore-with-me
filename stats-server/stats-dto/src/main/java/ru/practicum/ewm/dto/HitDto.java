@@ -1,4 +1,4 @@
-package ru.practicum.dto;
+package ru.practicum.ewm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,5 +19,6 @@ public class HitDto {
     private String ip;
     @JsonProperty("timestamp")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @NotNull
     private LocalDateTime hitTime;
 }

@@ -3,11 +3,12 @@ package ru.practicum.statistics.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.statistics.service.HitServiceImpl;
 import ru.practicum.statistics.util.Util;
-import ru.practicum.dto.HitDto;
-import ru.practicum.dto.StatsDto;
+import ru.practicum.ewm.dto.HitDto;
+import ru.practicum.ewm.dto.StatsDto;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class HitController {
     private final HitServiceImpl hitService;
 
     @PostMapping("/hit")
+    @ResponseStatus(HttpStatus.CREATED)
     public HitDto saveHit(@Valid @RequestBody HitDto hitDto) {
         log.info("HitController => saveHit: hitDto={}", hitDto);
         return hitService.saveHit(hitDto);
