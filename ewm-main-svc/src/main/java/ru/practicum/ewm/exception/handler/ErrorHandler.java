@@ -50,7 +50,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler({UserNotFoundException.class, EventNotFoundException.class, CategoryNotFoundException.class,
-            RequestNotFoundException.class, CompilationNotFoundException.class})
+            RequestNotFoundException.class, CompilationNotFoundException.class, CommentNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleNotFoundException(RuntimeException e) {
         return ApiError.builder()
