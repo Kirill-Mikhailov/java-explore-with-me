@@ -2,7 +2,6 @@ package ru.practicum.ewm.comment.dto.mapper;
 
 import ru.practicum.ewm.comment.dto.CommentDto;
 import ru.practicum.ewm.comment.dto.NewCommentDto;
-import ru.practicum.ewm.comment.dto.UpdateCommentDto;
 import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.user.dto.mapper.UserMapper;
