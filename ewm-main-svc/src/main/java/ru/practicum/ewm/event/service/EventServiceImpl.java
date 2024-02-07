@@ -1,16 +1,17 @@
 package ru.practicum.ewm.event.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.AmqpException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewm.StatsClient;
+import ru.practicum.ewm.EwmProducer;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.storage.CategoryRepository;
 import ru.practicum.ewm.dto.HitDto;
+import ru.practicum.ewm.dto.ReqParamForGetStats;
 import ru.practicum.ewm.dto.StatsDto;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.dto.mapper.EventMapper;
@@ -42,7 +43,7 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final ParticipationRequestRepository requestRepository;
-    private final StatsClient statsClient;
+    private final EwmProducer ewmProducer;
 
     @Override
     public List<EventShortDto> getEvents(
@@ -255,29 +256,27 @@ public class EventServiceImpl implements EventService {
             return 0L;
         }
         List<StatsDto> statsDto;
+        ReqParamForGetStats param = ReqParamForGetStats.builder()
+                .start(event.getPublishedOn())
+                .end(LocalDateTime.now())
+                .uris(List.of(String.format("/events/%d", event.getId())))
+                .unique(true)
+                .build();
         try {
-            statsDto = statsClient.getStats(
-                    event.getPublishedOn(),
-                    LocalDateTime.now(),
-                    List.of(String.format("/events/%d", event.getId())),
-                    true
-            );
-        } catch (Throwable e) {
-            throw new StatisticsServerException("Error on the statistics client side");
+            statsDto = ewmProducer.getStats(param);
+            return statsDto.isEmpty() ? 0L : statsDto.get(0).getHits();
+        } catch (AmqpException | NullPointerException e) {
+            throw new StatisticsServerException("Error on the statistics service side");
         }
-        return statsDto.isEmpty() ? 0L : statsDto.get(0).getHits();
     }
 
     private void saveHit(HttpServletRequest request) {
-        ResponseEntity<Object> response = statsClient.saveHit(
+        ewmProducer.saveHits(
                 HitDto.builder()
                         .app("ewm-main-service")
                         .uri(request.getRequestURI())
                         .ip(request.getRemoteAddr())
                         .hitTime(LocalDateTime.now())
                         .build());
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new StatisticsServerException("Error on the statistics client side");
-        }
     }
 }

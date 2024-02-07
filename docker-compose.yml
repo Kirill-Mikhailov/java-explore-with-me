@@ -6,6 +6,8 @@ services:
     container_name: stats_svc_container
     depends_on:
       - stats-db
+      - rabbitmq
+      - ewm-service
     ports:
       - "9090:9090"
     environment:
@@ -14,6 +16,12 @@ services:
       - DB_PORT=5432
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+      - Q_FOR_SAVE_NAME=saveHit
+      - Q_FOR_GET_STATS_NAME=getStats
 
   stats-db:
     image: postgres:14-alpine
@@ -31,6 +39,7 @@ services:
     container_name: ewm_main_svc_container
     depends_on:
       - ewm-db
+      - rabbitmq
     ports:
       - "8080:8080"
     environment:
@@ -39,6 +48,15 @@ services:
       - DB_PORT=5432
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+      - Q_FOR_SAVE_NAME=saveHit
+      - Q_FOR_GET_STATS_NAME=getStats
+      - EXCHANGE_NAME=mainStats
+      - RK_FOR_SAVE_HITS=saveHit
+      - RK_FOR_GET_STATS=getStats
 
   ewm-db:
     image: postgres:14-alpine
@@ -49,3 +67,14 @@ services:
       - POSTGRES_DB=ewm-db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
