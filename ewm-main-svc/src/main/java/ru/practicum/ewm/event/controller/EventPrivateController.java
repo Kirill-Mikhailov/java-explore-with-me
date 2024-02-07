@@ -31,8 +31,8 @@ public class EventPrivateController {
     @GetMapping
     public List<EventShortDto> getUserEvents(
             @Positive @PathVariable("userId") Long userId,
-            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") Integer from,
-            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+            @PositiveOrZero @RequestParam(value = "from", required = false, defaultValue = "0") int from,
+            @Positive @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         log.info("EventPrivateController => getUserEvents: userId={}, from={}, size={}", userId, from, size);
         return eventService.getUserEvents(userId, from, size);
     }
