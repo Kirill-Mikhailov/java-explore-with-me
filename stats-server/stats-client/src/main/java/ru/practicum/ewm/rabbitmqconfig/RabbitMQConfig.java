@@ -1,6 +1,5 @@
-package ru.practicum.ewm;
+package ru.practicum.ewm.rabbitmqconfig;
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ProducerRabbitMQConfig {
+public class RabbitMQConfig {
 
     @Value("${rabbitmq.queue.for.save.hits.name}")
     private String queueForSaveHitsName;
