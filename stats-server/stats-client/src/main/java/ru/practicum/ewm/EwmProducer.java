@@ -13,14 +13,11 @@ import java.util.List;
 @Component
 public class EwmProducer {
 
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     public EwmProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
-
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
 
     @Value("${rabbitmq.routing.key.for.save.hits}")
     private String routingKeyForSaveHits;
